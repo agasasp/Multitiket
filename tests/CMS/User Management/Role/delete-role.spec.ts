@@ -19,21 +19,15 @@ test('Delete Role Successfully', async ({ page }) => {
   await page.getByPlaceholder(/search/i).press('Enter');
   await page.waitForTimeout(1000);
 
-  // Hitung jumlah row sebelum delete
-  const rowsBefore = await page.locator(`tr:has-text("${roleName}")`).count();
-  expect(rowsBefore).toBeGreaterThan(0);
-
   // Tangani dialog konfirmasi delete
   page.once('dialog', dialog => dialog.accept());
 
-  // Klik tombol delete pada row pertama yang ditemukan (tombol terakhir = delete)
+  // Klik tombol delete pada row yang ditemukan
   await page.locator(`tr:has-text("${roleName}")`).first().getByRole('button', { name: 'Icon Minus' }).last().click();
 
   await page.waitForLoadState('networkidle');
-  await page.waitForTimeout(1000);
 
-  // Verifikasi jumlah row berkurang
-  const rowsAfter = await page.locator(`tr:has-text("${roleName}")`).count();
-  expect(rowsAfter).toBeLessThan(rowsBefore);
+  // Verifikasi role sudah terhapus
+  await expect(page.locator(`tr:has-text("${roleName}")`).first()).not.toBeVisible({ timeout: 10000 });
 
 });
