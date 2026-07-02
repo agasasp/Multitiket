@@ -13,8 +13,6 @@ test('Delete User Successfully', async ({ page }) => {
   await page.getByRole('link', { name: 'User' }).click();
 
   const emailUser = 'john.doe@test.com';
-
-  // Cari user dan tekan Enter untuk submit search
   await page.getByPlaceholder(/search/i).fill(emailUser);
   await page.getByPlaceholder(/search/i).press('Enter');
   await page.waitForTimeout(1000);
