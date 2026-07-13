@@ -22,8 +22,9 @@ test('Delete Role Successfully', async ({ page }) => {
   // Tangani dialog konfirmasi delete
   page.once('dialog', dialog => dialog.accept());
 
-  // Klik tombol delete pada row yang ditemukan
-  await page.locator(`tr:has-text("${roleName}")`).first().getByRole('button', { name: 'Icon Minus' }).last().click();
+  // Klik tombol delete (Icon Trash) pada row yang ditemukan
+  await page.locator(`tr:has-text("${roleName}")`).first()
+    .getByRole('button', { name: 'Icon Trash' }).click();
 
   await page.waitForLoadState('networkidle');
 
